@@ -35,8 +35,6 @@ def retrieve_url(code):
 
 user= "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 short = load_data()  # Load existing short URLs from file
-
-
 code = shorten_url(user)  
 save_data()  # Save the updated short URLs to file
 print("Shortened code:", code)  # something like "aB3x9K"

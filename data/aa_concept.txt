@@ -1,0 +1,23 @@
+list = you need order and duplicates 
+dict = you need rto pair a key with a value 
+set = you just need to know if something exist 
+tupple = data is fixed and should never change
+stack = orde matters last thing is first out 
+queue = order matters first thing in is first out 
+
+when using dict its easy to find the item saved, its becasue 
+short["ab3x9k"]
+
+Python does this:
+
+Takes your key "ab3x9k"
+Runs it through a formula — the hash function
+That formula spits out a number — say 4872
+Python goes directly to memory slot 4872
+Your value is sitting right there
+
+No searching. No comparing. No looping. Just — calculate key to address jump done 
+
+In One Sentence
+A dict doesn't search for the key — it calculates where the key lives.
+That's why it's instant regardless of size. 10 items or 10 million — same speed.
