@@ -1,0 +1,5 @@
+Week 3 — Recursion and Trees
+This is the week that separates programmers who think iteratively from programmers who think like engineers. Recursion is the hardest concept to learn — but once it clicks, it never un-clicks.
+Before any code, one question to get your brain ready:
+A folder can contain files or other folders. Those folders can contain more files or folders, and so on forever. How would you write code to count every single file no matter how deep they're nested?
+Think about it — a normal loop can't do this because you don't know how deep it goes. What's your instinct on how to solve it?

@@ -40,3 +40,11 @@ Three questions, plain English, no code:
  Exactly right. When your window is at position i, the element that just left the window is at i - k. 
  You subtract it to slide the window forward without recalculating everything.
 
+One — You have an unsorted list. Can you use two pointers to find a pair that sums to a target? 
+        Why or why not?
+Ans. 
+Two — What's the difference between deque.pop() and deque.popleft()? When would you use each?
+
+Three — Your sliding window solution runs in O(n). Why isn't it O(n²) even though 
+        there's a while loop inside the for loop?
+Ans.
