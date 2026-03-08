@@ -48,3 +48,10 @@ Two — What's the difference between deque.pop() and deque.popleft()? When woul
 Three — Your sliding window solution runs in O(n). Why isn't it O(n²) even though 
         there's a while loop inside the for loop?
 Ans.
+
+
+Checkpoint — Three Questions
+Plain English, no code:
+One — What are the two parts every recursive function must have?
+Two — Why is fib(50) without memoization so slow?
+Three — What data structure did you use to store memo results, and why is that the right choice?
