@@ -21,3 +21,22 @@ No searching. No comparing. No looping. Just — calculate key to address jump d
 In One Sentence
 A dict doesn't search for the key — it calculates where the key lives.
 That's why it's instant regardless of size. 10 items or 10 million — same speed.
+
+Checkpoint — Answer These Before We Move On
+Three questions, plain English, no code:
+1. What's the difference between two pointers and sliding window?
+    Two pointers — one at each end, move inward toward each other. Works on sorted data because 
+    sorting gives you a rule: too big → move right, too small → move left.
+   sliding window — both pointers at the left, move in the same direction. 
+   Works on any data because you're just maintaining a window of consecutive elements.
+
+2. Why does two pointers only work on a sorted list for the two sum problem?
+    Right instinct, wrong explanation. The real reason is: with an unsorted list you have 
+    no rule to decide which pointer to move. If the sum is too big,
+     you don't know whether moving left or right will fix it — because bigger numbers
+      could be anywhere. The sorted order is what gives you the decision rule.
+
+3.  In your sliding window solution, what does nums[i - k] represent?
+ Exactly right. When your window is at position i, the element that just left the window is at i - k. 
+ You subtract it to slide the window forward without recalculating everything.
+

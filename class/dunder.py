@@ -1,3 +1,8 @@
+#dunder methods, also known as magic methods,
+#  are special methods in Python that have double underscores
+#  at the beginning and end of their names. They are used to define 
+# the behavior of objects for built-in operations such as addition, 
+# multiplication, string representation, and equality comparison.
 class Vector:
     def __init__(self, x, y):
         self.x = x

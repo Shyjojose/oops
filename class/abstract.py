@@ -1,3 +1,8 @@
+#abstract class is a class that cannot be instantiated and 
+# is meant to be subclassed. It can contain abstract methods, 
+# which are methods that are declared but not implemented in the
+#  abstract class. Subclasses of the abstract class must implement
+#  the abstract methods.
 from abc import ABC, abstractmethod
 
 class shape(ABC):
