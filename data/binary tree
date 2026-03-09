@@ -57,3 +57,21 @@ Two things to define before coding — answer these first:
 One — what is the base case? When does the function stop?
 Two — what are the two recursive calls? What does the function call itself on?
 Answer those then write the code. No hints this time — you have everything you need from the folder counter and fibonacci.
+
+Question 1 ✅ Correct. When you reach None — the end of a branch — there's nothing left to process. That's the base case. No node means stop.
+
+Question 2 — Half right.
+You said "values at the end — 3, 7, 20." Close but not complete. Moving print after the recursive calls is called post-order traversal. You print a node only after fully exploring everything beneath it. So the output would be:
+3 7 5 20 15 10
+Not just the leaf nodes. Every node gets printed — but only after its entire subtree is done. The deepest nodes print first, the root prints last.
+
+Question 3 ❌ Not quite.
+You said "tree has a path so either down or up." The real reason is simpler — tree traversal doesn't revisit nodes. Each node is visited exactly once, on a straight path down. Fibonacci revisits subproblems — fib(3) gets called multiple times from different branches. Trees don't have that problem because each node has exactly one parent. No repetition means no need to cache.
+
+Week 3 — Complete
+You've now covered:
+
+Recursion ✅
+Fibonacci + Memoization ✅
+Binary Tree Traversal ✅
+Pre-order vs Post-order ✅
