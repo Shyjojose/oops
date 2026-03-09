@@ -1,0 +1,59 @@
+Next — Binary Trees
+This is where everything connects. Recursion plus a new data structure.
+A binary tree is just a recursive structure — each node has a value and up to two children. Left and right. Those children are also nodes with their own left and right. It goes as deep as needed.
+        10
+       /  \
+      5    15
+     / \     \
+    3   7    20
+Every node follows the same rule — value, left child, right child. Sound familiar? It's the folder problem again. A folder containing folders. Same shape, different name.
+
+Before we code — one question:
+Look at this tree:
+        10
+       /  \
+      5    15
+     / \     \
+    3   7    20
+If I asked you to print every number in the tree — how would you do it? You can't loop because you don't know how deep it goes.
+What's your instinct?check if number is there and beyond that check for number and print all10:46 AMRecognized vague request and prepared structured explanationRecognized vague request and prepared structured explanationRight instinct — but let me make it precise because "check if number is there and beyond" is actually describing recursion without realising it.
+
+What You're Actually Describing
+"Check a number, then go beyond it and check again" — that IS recursion. You just described it in plain English.
+The formal version:
+to print all numbers in a tree:
+    print the current node's value
+    then do the same thing for the left child
+    then do the same thing for the right child
+The function calls itself on the left child, then on the right child. Each child is a smaller tree. Same problem, smaller scale.
+
+The Base Case For Trees
+What stops the recursion? When there's no node — when you reach an empty branch. In Python that's None.
+        10
+       /  \
+      5    15
+     / \     \
+    3   7    20
+Node 3 has no children — both are None. That's the base case.
+
+Build a Tree Node in Python
+A tree node is just a simple class:
+pythonclass Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None    # left child
+        self.right = None   # right child
+Build the tree above manually:
+pythonroot = Node(10)
+root.left = Node(5)
+root.right = Node(15)
+root.left.left = Node(3)
+root.left.right = Node(7)
+root.right.right = Node(20)
+
+Your Task
+Write a recursive function print_tree(node) that prints every value in the tree.
+Two things to define before coding — answer these first:
+One — what is the base case? When does the function stop?
+Two — what are the two recursive calls? What does the function call itself on?
+Answer those then write the code. No hints this time — you have everything you need from the folder counter and fibonacci.
