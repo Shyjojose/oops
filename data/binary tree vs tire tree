@@ -75,3 +75,44 @@ Recursion ✅
 Fibonacci + Memoization ✅
 Binary Tree Traversal ✅
 Pre-order vs Post-order ✅
+
+A Trie (pronounced "try", also known as a prefix tree) is a specialized tree data structure used to store dynamically changing strings. The foundation of this data structure is the Trie Node.Unlike a binary tree node that only has a left and right child, a Trie node can have multiple children—one for each possible next character in a string.
+
+Here is a breakdown of the standard Trie Node structure, the different ways to implement it, and code examples.Core Components of a Trie NodeA standard Trie node contains two essential pieces of information:
+Children (children): A collection of references (pointers) to the node's children. Each child represents the next character in a word.
+
+End of Word Flag (is_end_of_word): A boolean value that is set to True if the path from the root to this specific node represents a complete, valid word that was inserted into the Trie. If it is False, the node is merely a prefix for a longer word.(Note: The node usually does not need to store the character itself. The character is implicitly defined by the link/key that points to the node from its parent).Two Ways to Structure the childrenDepending on your memory constraints and the size of your alphabet, there are two primary ways to store the children in a Trie node:
+
+1. Using an Array (Fastest, but uses more memory)If you know your data will only consist of lowercase English letters (a-z), you can use an array of fixed size (26).Pros: Lightning-fast $O(1)$ lookups. You just calculate the index (e.g., char - 'a').Cons: Wastes a lot of memory. Every single node creates an array of 26 pointers, even if it only has 1 child. It also doesn't scale well to Unicode or special characters.
+2. Using a Hash Map / Dictionary (Space-efficient, handles any character)Instead of a fixed array, you use a Hash Map where the key is the character and the value is the next TrieNode.Pros: Highly memory efficient for sparse trees. It can easily handle any character (uppercase, numbers, emojis, Unicode) without changing the code.
+Cons: Slightly slower than an array due to hash function overhead, though still conceptually $O(1)$.
+
+The Binary Tree: A Fork in the Road
+You are exactly right about the Binary Tree. The word "Binary" means two. Every time you are at a node in a Binary Tree, the path can only split in a maximum of two directions: Left or Right.
+
+Think of it like a fork in the road where you have to choose to go either left or right.
+
+The Trie: A Roundabout with 26 Exits
+A Trie is what we call an N-ary Tree (meaning a node can have any number of children). Instead of just Left and Right, a Trie node can split into as many paths as there are characters in your alphabet.
+
+If you are only using lowercase English letters, a single node in a Trie can split into 26 different paths at the exact same time—one for 'a', one for 'b', one for 'c', all the way to 'z'.
+
+A Visual Example
+Imagine we want to store the words "cat", "car", "cop", and "bat".
+
+In a Trie, the top node (the Root) doesn't just split into two. It splits based on the first letter of our words. Here, it splits into 'c' and 'b'.
+
+Then, look at the 'c' node. It splits into 'a' (for cat/car) and 'o' (for cop).
+
+Plaintext
+          [Root]
+         /      \
+       'c'      'b'     <-- The root splits into 'c' and 'b'
+      /   \       \
+    'a'   'o'     'a'   <-- The 'c' splits into 'a' and 'o'
+    / \     \       \
+  't' 'r'   'p'     't' <-- The 'a' splits into 't' and 'r'
+Summary
+Binary Tree Node: Has exactly left and right pointers (Max 2 splits).
+
+Trie Node: Has a collection of pointers, one for every possible next letter (Max 26 splits for the English alphabet, or even thousands of splits if using Unicode/Emojis).

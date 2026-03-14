@@ -6,7 +6,7 @@ from collections import deque
 que = deque()
 que.append("bob")
 que.append("alice")
-que.append("charlie")
+que.append("charlie") #queue = (bob, alice, charlie)
 print("Original:", que)  # Output: bob, alice, charlie
 print(" dequeue:", que.popleft())  # Output: bob
 print("Current:", que)  # Output: alice, charlie
