@@ -1,0 +1,25 @@
+Dynamic programming 
+memoization on fibonacci 
+
+break one big problem into smaller subproblems solve each subproblem once store the 
+result and never solve it again.
+
+def fib(n, memo={}):
+  if n in memo:
+    return memo[n]
+  memo[n]= fib(n-1)+ fib(n-2)
+  return memo[n]
+
+Two approaches 
+
+Top Down- memoization start with the big problem. rescurse cache the result
+Bottom up - tabulation start with the smallest prblem filla table upward untill you reach the answer.
+no recursion at all 
+
+def fib_bottom_up(n):
+    table = [0]*(n+1)
+    table[1]=1
+    table[2]=1
+    for i in range(3,n+1):
+        table[i]= table[i-1]+table[i-2]
+    return table[n]
