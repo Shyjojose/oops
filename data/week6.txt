@@ -23,3 +23,45 @@ def fib_bottom_up(n):
     for i in range(3,n+1):
         table[i]= table[i-1]+table[i-2]
     return table[n]
+def climb_stairs(n):
+    if n == 1:
+        return 1
+    table = [0] * (n + 1)
+    table[1] = 1
+    table[2] = 2
+    for i in range(3, n + 1):
+        table[i] = table[i-1] + table[i-2]
+    return table[n]
+
+print(climb_stairs(1))    # 1
+print(climb_stairs(2))    # 2
+print(climb_stairs(3))    # 3
+print(climb_stairs(4))    # 5
+print(climb_stairs(10))   # 89
+```
+
+Type it out, run it, paste back the output. Then answer one question after you run it:
+
+**The table for `climb_stairs(4)` looks like this — fill in the blanks:**
+```
+table[0] = 0
+table[1] = 1
+table[2] = 2
+table[3] = ?
+table[4] = ?
+
+table[0] = 0   # unused
+table[1] = 1   # base case — set manually
+table[2] = 2   # base case — set manually
+table[3] = table[2] + table[1] = 2 + 1 = 3   # calculated once, stored
+table[4] = table[3] + table[2] = 3 + 2 = 5   # calculated once, storedYour question — "are values recalculated again?"
+
+NO. That's the entire point of bottom-up DP.
+Each value is calculated exactly once and stored in the 
+table. When table[4] needs table[3] — it doesn't 
+recalculate table[3]. It just reads the stored value. 
+Like looking up a dict — instant.
+
+The mental model:
+Think of the table like a notepad. You solve a small problem, write the answer down. Next time you need it — you read the notepad. You never solve it again.
+That's bottom-up DP. Calculate once. Store. Reuse.
