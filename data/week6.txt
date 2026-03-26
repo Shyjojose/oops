@@ -65,3 +65,9 @@ Like looking up a dict — instant.
 The mental model:
 Think of the table like a notepad. You solve a small problem, write the answer down. Next time you need it — you read the notepad. You never solve it again.
 That's bottom-up DP. Calculate once. Store. Reuse.
+
+every time you see a problem that says:
+How many ways to reach x 
+minimum value you can collect 
+
+immideately think how can i break into sub problems 
