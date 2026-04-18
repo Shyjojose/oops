@@ -14,3 +14,6 @@ def min_coins(coins, amount):
                 table[i] = min(table[i], table[i - coin] + 1) #i - coin check the befor position liek i=10 10-5 = 5 and table[5] is 1 so table[10] will be min(infinity, 1+1) = 2
     return table[amount] if table[amount] != float('inf') else -1 # if the amount cannot be made with the given coins, return -1
 
+print(min_coins([1, 5, 10], 11))   # 2
+print(min_coins([1, 5, 10], 36))   # 5
+print(min_coins([2], 3))           # -1

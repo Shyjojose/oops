@@ -5,7 +5,7 @@ class Employee:
         self.name = name
         self.salary = salary
 
-    @classmethod    
+    @classmethod    #class method will change the company name for all the employees, not just the instance that calls the method.
     def change_company(cls, new_company):
         cls.company = new_company #update company name for all employees 
     @staticmethod

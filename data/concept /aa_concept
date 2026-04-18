@@ -1,5 +1,5 @@
 list = you need order and duplicates 
-dict = you need rto pair a key with a value 
+dict = you need to pair a key with a value 
 set = you just need to know if something exist 
 tupple = data is fixed and should never change
 stack = orde matters last thing is first out 
