@@ -1,14 +1,18 @@
+from typing import Optional
+
 class Node:
     def __init__(self, value):
         self.value = value
-        self.left = None
-        self.right = None
+        self.left: Optional["Node"] = None
+        self.right: Optional["Node"] = None
 root = Node(10)
-root.left =Node(5)
-root.right = Node(15)
-root.left.left=Node(3)
-root.left.right=Node(7)
-root.right.right=Node(20)
+left_child = Node(5)
+right_child = Node(15)
+root.left = left_child
+root.right = right_child
+left_child.left = Node(3)
+left_child.right = Node(7)
+right_child.right = Node(20)
 
 #pre order traversal print the node before its children
 

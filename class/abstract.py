@@ -36,9 +36,8 @@ class Triangle(shape):
         return self.base + self.height + (self.base**2 + self.height**2)**0.5
 
 shapes = [Circle(5), Rectangle(4, 6), Triangle(3, 4)]# This will raise a TypeError because we cannot instantiate an abstract class
-s2=shape()#type error 
-s3= Circle()#
+s3 = Circle(5)
 print(s3.area())
-for shape in shapes:
-    print(f"The area of the {shape.__class__.__name__} is: {shape.area()}")
-    print(f"The perimeter of the {shape.__class__.__name__} is: {shape.perimeter()}")
+for shp in shapes:
+    print(f"The area of the {shp.__class__.__name__} is: {shp.area()}")
+    print(f"The perimeter of the {shp.__class__.__name__} is: {shp.perimeter()}")
