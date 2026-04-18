@@ -114,3 +114,58 @@ pythonif not stack:
     print("empty")
 You never access the middle. You never access the bottom. Only the top.
 
+Queue — First In, First Out
+Let me give you the real world picture first.
+Think about a queue of people waiting at a coffee shop. The first person who joined the line gets served first. The last person who joined waits the longest. Nobody cuts in from the middle. First In, First Out. FIFO.
+That's the exact opposite of a stack.
+
+Where You Already See Queues Every Day
+WhatsApp messages. Messages are delivered in the order they were sent. First message sent, first message received. That's a queue.
+Print jobs. Send three documents to a printer. They print in the order you sent them. Queue.
+YouTube video loading. Buffering loads chunks of video in order — chunk 1, chunk 2, chunk 3. Queue.
+CPU task scheduling. Your operating system uses queues to decide which program runs next.
+
+Why Not Just Use a List?
+You could. But there's a problem. Removing from the front of a list is slow — O(n) — because Python has to shift every remaining item one position to the left. Imagine doing that a million times.
+Python gives us a better tool — deque (pronounced "deck"). It stands for double ended queue. It can add and remove from both ends in O(1) — instant.
+pythonfrom collections import deque
+
+queue = deque()
+That one import is all you need.
+
+The Two Operations
+Enqueue — join the back of the line
+pythonqueue.append("Alice")     # Alice joins
+queue.append("Bob")       # Bob joins behind Alice
+queue.append("Charlie")   # Charlie joins behind Bob
+# queue → Alice, Bob, Charlie
+# Alice is at the front, Charlie at the back
+Dequeue — serve from the front of the line
+pythonqueue.popleft()    # removes Alice → she gets served first
+queue.popleft()    # removes Bob
+# queue → Charlie
+Notice — popleft() not pop(). That's the key difference from a stack. Stack uses pop() — takes from the end. Queue uses popleft() — takes from the front.
+
+Stack vs Queue Side by Side
+This is worth burning into your brain:
+StackQueueRuleLast In First OutFirst In First OutAddappend()append()Removepop() — from endpopleft() — from frontReal worldUndo buttonPrinter queueBuilt withlistdeque
+
+Your Exercise
+Two exercises — same pattern as before:
+Exercise 1 — Simulate a coffee shop queue. Three customers join: "Alice", "Bob", "Charlie". Serve them one by one using popleft(). Print who gets served each time.
+Exercise 2 — Hot Potato game. Given a list of names and a number n, pass the "potato" around the queue n times. The person holding it after n passes gets eliminated. Keep going until one person is left — they win.
+Walk through exercise 2 in plain English first before coding: every round you move the front person to the back n times, then the person at the front is out. Repeat until one remains.
+Paste your code back when ready. Once this is done — you have all six data structures. We move straight into the first real algorithm pattern and start building your URL Shortener project.
+from collections import deque
+
+lis = ["bob", "alice", "charlie", "david"]
+num = 2
+que = deque(lis)
+
+while len(que) > 1:
+    for i in range(num):
+        que.append(que.popleft())   # pass potato num times
+    eliminated = que.popleft()      # ← THIS LINE — person holding it is out
+    print(f"{eliminated} is eliminated")
+
+print("Winner:", que[0])
