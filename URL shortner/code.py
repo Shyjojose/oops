@@ -2,6 +2,10 @@ import random
 import string
 import json
 
+# in this code short is a python dictionary and when i call save_data () it will save
+# it as a json file. 
+# in large system the production systems persistent data is usally stored as postgresql,
+# mysql mongodb there is redis for caching and many more. but here we are using json file to store the data.
 def save_data():
     with open("URL shortner/short_urls.json", "w") as file:
         json.dump(short, file)

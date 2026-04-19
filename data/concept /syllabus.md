@@ -33,17 +33,21 @@ list1=[3, 1, 4, 1, 5, 9, 2, 6]
 for i int list1:
     dic1[i] = list1.count(i)
 print(dic1)
-Your solution works but it has a hidden inefficiency. list1.count(i) scans the entire list every single time through the loop. So if the list has 8 items, you're scanning 8 times × 8 items = 64 operations. For a million items that becomes a serious problem.
-list1 = [3, 1, 4, 1, 5, 9, 2, 6]
-counts = {}
 
-for num in list1:
+Your solution works but it has a hidden inefficiency. list1.count(i) scans the entire list every single time through the loop. So if the list has 8 items, you're scanning 8 times × 8 items = 64 operations. For a million items that becomes a serious problem.
+
+# 30% of all LeetCode problems.
+
+- list1 = [3, 1, 4, 1, 5, 9, 2, 6]
+- counts = {}
+
+- for num in list1:
     if num in counts:
         counts[num] += 1    # seen before — add 1
     else:
         counts[num] = 1     # first time seeing it — start at 1
 
-print(counts)
+- print(counts)
 
 The Python Data Structures Map
 Think of it as a ladder. You've climbed the first two rungs.
