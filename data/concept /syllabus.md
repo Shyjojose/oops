@@ -173,3 +173,73 @@ while len(que) > 1:
     print(f"{eliminated} is eliminated")
 
 print("Winner:", que[0])
+
+One More Before the Project — Sliding Window
+Before we build the Log File Analyzer, you need to feel the sliding window pattern. It's the other half of this week.
+Here's the problem in plain English:
+Given a list of numbers [2, 1, 5, 1, 3, 2] and a window size k = 3, find the maximum sum of any 3 consecutive numbers.
+The brute force way — calculate the sum of every possible group of 3. That's O(n×k).
+The sliding window way — calculate the first window's sum, then slide right by adding the new number and dropping the old one. Never recalculate the whole window. O(n).
+[2, 1, 5, 1, 3, 2]   k=3
+
+Window 1: 2+1+5 = 8
+Slide →  drop 2, add 1 → 1+5+1 = 7
+Slide →  drop 1, add 3 → 5+1+3 = 9  ← maximum
+Slide →  drop 1, add 2 → 1+3+2 = 6
+Write this function:
+pythondef max_window_sum(nums, k):
+    # calculate first window sum
+    # slide across the rest
+    # track the maximum
+    # return it
+
+print(max_window_sum([2, 1, 5, 1, 3, 2], 3))  # 9
+print(max_window_sum([1, 4, 2, 9, 7, 3], 2))  # 16
+Think before coding — how do you slide the window? You add nums[right] and drop nums[right - k]. That's the key insight. Write it and paste back.def max_window_sum(nums, k):
+    if k > len(nums):
+        return None
+    window_sum = sum(nums[:k])
+    max_sum = window_sum
+    for i in range(k, len(nums)):
+        window_sum += nums[i] - nums[i - k]
+        max_sum = max(max_sum, window_sum)
+    return max_sum
+  
+    # slide across the rest
+    # track the maximum
+    # return it
+
+print(max_window_sum([2, 1, 5, 1, 3, 2], 3))  # 9
+print(max_window_sum([1, 4, 2, 9, 7, 3], 2))  # 16Show lessMar 7Validated sliding window algorithm implementation thoroughlyValidated sliding window algorithm implementation thoroughlyThat is exceptional. Genuinely impressive code.
+
+Every line is correct and professional:
+pythonif k > len(nums):
+    return None              # ✅ edge case handled — window bigger than list
+
+window_sum = sum(nums[:k])   # ✅ first window calculated cleanly
+max_sum = window_sum         # ✅ starts max at first window
+
+for i in range(k, len(nums)):
+    window_sum += nums[i] - nums[i - k]   # ✅ slide — add new, drop old
+    max_sum = max(max_sum, window_sum)     # ✅ track maximum
+
+return max_sum               # ✅ clean return
+
+The line that shows you truly understood it:
+pythonwindow_sum += nums[i] - nums[i - k]
+You didn't recalculate the whole window. You added the new number coming in and subtracted the old number leaving. That's the entire sliding window insight in one line. Most beginners miss this and recalculate from scratch every time — O(n×k). Yours is O(n).
+
+Week 2 Complete
+Look what you've mastered this week:
+
+Two Sum Sorted — two pointers from opposite ends ✅
+Palindrome Check — two pointers comparing characters ✅
+Max Window Sum — sliding window, add and drop ✅
+
+
+Checkpoint — Answer These Before We Move On
+Three questions, plain English, no code:
+One — What's the difference between two pointers and sliding window?
+Two — Why does two pointers only work on a sorted list for the two sum problem?
+Three — In your sliding window solution, what does nums[i - k] represent?
+Answer all three and we move straight into building the Log File Analyzer project — where you use sliding window on real data.in two pointers we need to know length of list and also need sorted list. two pointers on not sorted list makes it remove not smallest one from the k and finally num[i-k] is the position of the first number in the window
