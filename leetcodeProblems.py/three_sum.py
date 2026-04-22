@@ -1,0 +1,17 @@
+# 3Sum Closest Problem
+# Find three integers in array with sum closest to target.
+#
+# Example 1:
+# Input: nums = [-1,2,1,-4], target = 1
+# Output: 2
+# Explanation: The sum closest to target 1 is 2. (-1 + 2 + 1 = 2)
+#
+# Example 2:
+# Input: nums = [0,0,0], target = 1
+# Output: 0
+#
+# Constraints:
+# 3 <= nums.length <= 500
+# -1000 <= nums[i] <= 1000
+# -10^4 <= target <= 10^4
+
