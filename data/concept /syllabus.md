@@ -28,7 +28,7 @@ Three — Whenever you catch yourself writing a loop just to find something — 
 Given a list [3, 1, 4, 1, 5, 9, 2, 6], loop through it and count how many times each number appears using a dict. At the end, print the dict.
 That last exercise is the foundation of 30% of all LeetCode problems.
 
-count= {}
+dict[i]= {}
 list1=[3, 1, 4, 1, 5, 9, 2, 6]
 for i int list1:
     dic1[i] = list1.count(i)
@@ -48,6 +48,15 @@ Your solution works but it has a hidden inefficiency. list1.count(i) scans the e
         counts[num] = 1     # first time seeing it — start at 1
 
 - print(counts)
+
+Dictionary access is by key, not by position.
+It is not like a list index.
+Example:
+If counts is {3: 1, 1: 2}, then:
+
+counts[3] is 1
+counts[1] is 2
+counts[0] gives error unless key 0 exists
 
 The Python Data Structures Map
 Think of it as a ladder. You've climbed the first two rungs.
@@ -78,14 +87,44 @@ a & b    # intersection → {3, 4}   what's in BOTH
 a | b    # union → {1, 2, 3, 4, 5, 6}   everything
 a - b    # difference → {1, 2}   in a but NOT in b
 
-When to Use What — The Decision
-This is the question senior developers ask instinctively. Train yourself to ask it every time:
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+# Method 1: using &
+intersection_result = a & b
+print(intersection_result)   # {3, 4}
+
+# Method 2: using intersection()
+intersection_result2 = a.intersection(b)
+print(intersection_result2)  # {3, 4}
+
+# Tuple
+This one is quick, five minutes max. A tuple is just a list that cannot be changed after you create it.
+pythonpoint = (10, 20)       # parentheses instead of brackets
+point[0]               # 10 — reading works fine
+point[0] = 99          # ❌ ERROR — tuples don't allow this
+
+tuple usage 
+-> coordinate and fixed pairs of data that should never change 
+-> returning multiple values from a function 
+def get_user():
+    return "Shyjo", 22       # Python returns this as a tuple
+
+name, age = get_user()       # unpacking — you'll use this constantly
+-> tuple as a dictionary key is valid 
+grid = {}
+grid[(0, 0)] = "start"     # tuple as a key — valid
+grid[(1, 2)] = "player"
+
+
+# When to Use What — The Decision This is the question senior developers ask instinctively. Train yourself to ask it every time:
 "Do I need to store pairs of data?" → Dictionary
 "Do I just need to remember if I've seen something?" → Set
 "Do I need order and duplicates?" → List
-"Is this data fixed and never changing?" → Tuple
+"I"s this data fixed and never changing?" → Tuple
+--list -- dict --- set --- tuple --
 
-Stack — Last In, First Out
+# Stack — Last In, First Out
 Let me give you the real world picture first.
 Think about a stack of plates. You put a plate on top. You put another on top of that. When you take a plate — you take from the top. You can't pull from the middle or the bottom. The last plate you put on is the first one you take off.
 That's a stack. Last In, First Out. LIFO.

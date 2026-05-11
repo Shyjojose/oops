@@ -24,9 +24,11 @@ def twoSum(nums, target):
     for i, num in enumerate(nums):
         if target - num in num_saved:
             return [num_saved[target - num], i]
+        print (num_saved)
         num_saved[num] = i
     return None
 
 print(twoSum([2,7,11,15], 9))   # [0, 1]
 print(twoSum([3,2,4], 6))       # [1, 2]
 print(twoSum([3,3], 6))         # [0, 1]
+print(twoSum([3,1,4,4,9,7,3], 6)) # [0,6]
