@@ -658,3 +658,211 @@ print(merge_sort(nums))   # [3, 9, 10, 27, 38, 43, 82]
     [27, 38, 43] [3, 9] [10, 82]
               ↓ merge
         [3, 9, 10, 27, 38, 43, 82]
+
+# tire node 
+
+trie is a tree like data structure that stores a dynamic set of strings,
+
+the dictionaries is used nad is_end is important if not the program dosent know the ending of the word
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}    # letter → next TrieNode every single node is a character and it has a dictionary of its children
+        self.is_end = False   # does a word end here?
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()  # create if missing
+            node = node.children[char]             # move deeper
+        node.is_end = True                         # mark word end
+
+    def search(self, prefix):
+        root = self.root
+        for p in prefix:
+            if p not in root.children:
+                return []
+            root = root.children[p]
+        # walk down the trie following the prefix
+        # return all words that start with prefix
+        words = []
+        self._collect_words(root, prefix, words)
+        return words
+
+    def _collect_words(self, node, prefix, words):
+        if node.is_end:
+            words.append(prefix)
+        for char, child_node in node.children.items():
+            self._collect_words(child_node, prefix + char, words)
+
+trie = Trie()
+trie.insert("cat")
+trie.insert("car")
+trie.insert("card")
+trie.insert("care")
+trie.insert("dog")
+
+print(trie.search("ca"))  # ["cat", "car", "card", "care"]
+Show less
+
+One — Why is Trie search faster than binary search for autocomplete?
+Binary search needs a sorted list and takes O(log n) — so 100,000 words needs about 17 checks. But it can only find exact words, not prefixes.
+A Trie finds all words starting with "car" in O(3) — just the length of the prefix. Three letters, three steps, done. It doesn't matter if there are 100 or 100,000 words stored. Binary search gets slower as the dictionary grows. Trie doesn't.
+
+Two — What does is_end do and why would the Trie break without it?
+Right instinct, sharpen it. Without is_end you can't tell where words stop. "card" and "care" both pass through "car" — without marking "car" as a valid word end, you'd never know "car" itself is a word. Every path would just keep going with no stopping point.
+Three — Your _collect_words is recursive. What is its base case?
+Correct. When is_end is True, you've found a complete word — add it to results. The recursion still continues into children to find longer words, but is_end is what triggers saving a word.
+
+
+# Graphs 
+
+a tree is just a graph with one rule: no cycles, one parent per node. Remove that rule and you get a graph. Nodes can connect to anything.
+A graph is just this:
+Alice ——— Bob
+  |         |
+Charlie — Diana
+  |
+ Eve
+No root. No parent/child. Just nodes and connections — called edges.
+
+The Data Structure — Queue
+Which data structure does this naturally? Think about it — you visit Alice's friends first, then add their friends to check next. First people added, first people checked.
+That's a queue. First in, first out. You learned this in Week 2.
+Start: queue = [Alice]
+
+Step 1: pop Alice → check her friends → add Bob, Charlie to queue
+queue = [Bob, Charlie]
+
+Step 2: pop Bob → check his friends → add Diana to queue
+queue = [Charlie, Diana]
+
+Step 3: pop Charlie → check his friends → add Diana, Eve to queue
+queue = [Diana, Diana, Eve]   ← problem here — Diana twice
+
+The Visited Set
+You need to remember who you've already checked — otherwise you visit the same person twice and loop forever. 
+
+The Graph Structure
+A graph in Python is just a dictionary — each person maps to a list of their friends:
+pythongraph = {
+    "Alice":   ["Bob", "Charlie"],
+    "Bob":     ["Alice", "Diana"],
+    "Charlie": ["Alice", "Diana", "Eve"],
+    "Diana":   ["Bob", "Charlie"],
+    "Eve":     ["Charlie"]
+}
+
+use dqeue 
+
+from collections import deque
+
+graph = {
+    "Alice":   ["Bob", "Charlie"],
+    "Bob":     ["Alice", "Diana"],
+    "Charlie": ["Alice", "Diana", "Eve"],
+    "Diana":   ["Bob", "Charlie"],
+    "Eve":     ["Charlie"]
+}
+
+def bfs(graph, start, target):
+    queue = deque()
+    visited = set()
+
+    queue.append((start, 0))   # (person, steps)
+    visited.add(start)
+
+    while queue:
+        node, steps = queue.popleft()   # pop front
+
+        if node == target:              # found it
+            return steps
+
+        for neighbour in graph[node]:   # check all friends
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append((neighbour, steps + 1))
+
+    return -1   # not found
+
+print(bfs(graph, "Alice", "Eve"))    # 2 steps — Alice→Charlie→Eve
+print(bfs(graph, "Alice", "Diana"))  # 2 steps — Alice→Bob→Diana
+print(bfs(graph, "Alice", "Alice"))  # 0 steps — already there
+
+
+--always this mistake 
+pythonqueue = append([start])      # ❌ append is a method, not a function
+visited = append.(start)     # ❌ this means nothing in Python
+Correct way:
+pythonqueue.append(start)          # ✅ method on the deque
+visited.add(start)           # ✅ sets use .add() not .append()
+
+Start:  queue = [(Alice, 0)]   visited = {Alice}
+
+Pop Alice (step 0)
+  neighbours: Bob, Charlie
+  queue = [(Bob,1), (Charlie,1)]
+  visited = {Alice, Bob, Charlie}
+
+Pop Bob (step 1) — not target
+  neighbours: Alice✗, Diana
+  queue = [(Charlie,1), (Diana,2)]
+  visited = {Alice, Bob, Charlie, Diana}
+
+Pop Charlie (step 1) — not target
+  neighbours: Alice✗, Diana✗, Eve
+  queue = [(Diana,2), (Eve,2)]
+  visited = {Alice, Bob, Charlie, Diana, Eve}
+
+Pop Diana (step 2) — not target
+  neighbours: Bob✗, Charlie✗ — nothing to add
+
+Pop Eve (step 2) — TARGET FOUND → return 2 ✅
+
+# dfs
+
+DFS — stack — goes deep first — finds a path, not necessarily shortest
+
+DFS is like exploring a maze by always turning left — you'll eventually find the exit but maybe not the fastest way out.
+
+DFS — Depth First Search
+Same graph, different approach. Instead of a queue — use a stack. Instead of exploring all neighbours first — dive as deep as possible down one path before trying another.
+Graph:
+Alice — Bob — Diana
+  |              
+Charlie — Eve
+BFS explores: Alice → Bob, Charlie → Diana, Eve
+DFS explores: Alice → Bob → Diana → backtrack → Charlie → Eve
+
+
+def dfs(graph, start, target):
+    stack = []          # ← stack not deque
+    visited = set()
+
+    stack.append((start, 0))
+    visited.add(start)
+
+    while stack:
+        node, steps = stack.pop()    # ← pop() not popleft()
+
+        if node == target:
+            return node, steps
+
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                stack.append((neighbour, steps + 1))
+
+    return -1
+
+print(dfs(graph, "Alice", "Eve"))     # finds Eve — but steps may differ from BFS
+print(dfs(graph, "Alice", "Diana"))
+print(dfs(graph, "Alice", "Alice"))
+
+# Dynamic programming 
+
