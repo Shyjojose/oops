@@ -157,7 +157,33 @@ pythonif not stack:
     print("empty")
 You never access the middle. You never access the bottom. Only the top.
 
-Queue — First In, First Out
+def is_valid(s):
+    stack = []
+    # Map closing brackets to their corresponding opening brackets
+    mapping = {")": "(", "}": "{", "]": "["}
+
+    for char in s:
+        # If it's a closing bracket 
+        if char in mapping: # here in mapping dictionary it looks for key
+                            #if mapping.values() looks   for values 
+            # Pop the top element if stack isn't empty, else use a dummy value
+            top_element = stack.pop() if stack else '#'
+            
+            # If the popped element doesn't match the mapping, it's invalid
+            if mapping[char] != top_element:
+                return False
+        else:
+            # It's an opening bracket, push it onto the stack
+            stack.append(char)
+
+    # If the stack is empty, all brackets were matched correctly
+    return not stack
+ Examples:
+ print(is_valid("(())")) -> True
+print(is_valid("({)}")) -> False
+
+
+# Queue — First In, First Out
 Let me give you the real world picture first.
 Think about a queue of people waiting at a coffee shop. The first person who joined the line gets served first. The last person who joined waits the longest. Nobody cuts in from the middle. First In, First Out. FIFO.
 That's the exact opposite of a stack.
@@ -201,6 +227,11 @@ Walk through exercise 2 in plain English first before coding: every round you mo
 Paste your code back when ready. Once this is done — you have all six data structures. We move straight into the first real algorithm pattern and start building your URL Shortener project.
 from collections import deque
 
+from collections import deque
+
+queue = deque()
+
+
 lis = ["bob", "alice", "charlie", "david"]
 num = 2
 que = deque(lis)
@@ -214,6 +245,23 @@ while len(que) > 1:
 print("Winner:", que[0])
 
 One More Before the Project — Sliding Window
+# url shortner 
+"""
+Simple URL Shortener (Beginner Version)
+
+What this program does:
+1. Loads old short codes from a JSON file.
+2. Generates a random 6-character code.
+3. Stores code -> original URL in a Python dictionary.
+4. Saves updated dictionary back to JSON.
+5. Retrieves the original URL using the short code.
+
+Why JSON?
+- JSON is used here as simple file storage.
+- In real projects, this is usually stored in a database.
+"""
+# two pointer 
+
 Before we build the Log File Analyzer, you need to feel the sliding window pattern. It's the other half of this week.
 Here's the problem in plain English:
 Given a list of numbers [2, 1, 5, 1, 3, 2] and a window size k = 3, find the maximum sum of any 3 consecutive numbers.
