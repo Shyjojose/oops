@@ -479,3 +479,182 @@ fib(2) = 1
 fib(3) = fib(2) + fib(1) = 2
 fib(4) = fib(3) + fib(2) = 3
 fib(5) = fib(4) + fib(3) = 5
+
+What is the base case?
+fib(1) = 1
+fib(2) = 1
+What is the recursive case?
+
+def fib(n):
+    # base case 1
+    if n == 1:
+        return 1
+    # base case 2
+    if n == 2:
+        return 1
+    # recursive case — just two calls added together
+    return fib(n-1) + fib(n-2)
+
+# memoization
+
+if the problem need ot solve twice use memoization 
+def fib(n, memo={}):
+    if n == 1 or n == 2:
+        return 1
+    if n in memo:
+        return memo[n]      # already calculated — return instantly
+    memo[n] = fib(n-1, memo) + fib(n-2, memo)  # store it
+    return memo[n]
+
+# binary tree 
+
+A binary tree is just a recursive structure — each node has a value and up to two children. Left and right. Those children are also nodes with their own left and right. It goes as deep as needed.
+
+        10
+       /  \
+      5    15
+     / \     \
+    3   7    20
+
+Build a Tree Node in Python
+A tree node is just a simple class:
+python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None    # left child
+        self.right = None   # right child
+Build the tree above manually:
+pythonroot = Node(10)
+root.left = Node(5)
+root.right = Node(15)
+root.left.left = Node(3)
+root.left.right = Node(7)
+root.right.right = Node(20)
+
+
+
+def print_tree(node):
+    # base case — if node is None, stop
+    if node is None:
+        return
+
+    # print current node's value
+    print(node.value)
+
+    # recurse into left child
+    print_tree(node.left)
+
+    # recurse into right child
+    print_tree(node.right)
+
+    print_tree(10)
+    print 10
+    print_tree(5)
+        print 5
+        print_tree(3)
+            print 3
+            print_tree(None) → return
+            print_tree(None) → return
+        print_tree(7)
+            print 7
+            print_tree(None) → return
+            print_tree(None) → return
+    print_tree(15)
+        print_tree(None) → return
+        print_tree(20)
+            print 20
+            print_tree(None) → return
+            print_tree(None) → return
+
+Output: 10 5 3 7 15 20
+
+One — What is the base case for a tree traversal and why?
+if node is None:
+    return
+Two — What happens if you move print(node.value) to after the two recursive calls instead of before?
+so here the tree from  3 7 5 20 15 10 that prints form backward
+Three — Your fibonacci used a dict for memoization. Your tree traversal didn't need one. Why not?
+in fibonacci the nodes or points are visited once but in tree thats not the case the nodes are visited once
+
+# Binary search 
+
+Start at the middle ✅
+Number too high → take the right half ✅
+Number too low → take the left half ✅
+Split and repeat ✅
+
+def binary_search(nums, target):
+    left = 0
+    right = len(nums) - 1
+
+    while left <= right:
+        mid = (left + right) // 2    # middle index
+
+    if target == nums[mid]:
+        return mid                # ✅ found it — return index
+
+    elif target < nums[mid]:
+        right = mid - 1           # ✅ too big — throw away right half
+
+    else:
+        left = mid + 1            # ✅ too small — throw away left half
+
+    return -1   # not found
+
+nums = [1, 3, 5, 7, 9, 11, 13, 15]
+print(binary_search(nums, 7))    # 3
+print(binary_search(nums, 1))    # 0
+print(binary_search(nums, 15))   # 7
+print(binary_search(nums, 6))    # -1 not found
+
+# merge sort 
+
+Look at the front of each list
+Pick the smaller one
+Append it to the result
+Repeat until both lists are empty
+def merge(left, right):
+    result = []
+    i = 0   # pointer for left list
+    j = 0   # pointer for right list
+
+    # while both lists have items
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:           
+            result.append(right[j])
+            j += 1
+        # compare front of each list
+        # append the smaller one
+        # move that pointer forward
+
+    # one list may have leftovers — add them
+    result += left[i:]
+    result += right[j:]
+    return result
+
+def merge_sort(nums):
+    # base case — list of 1 or 0 items is already sorted
+    if len(nums) <= 1:
+        return nums
+
+    mid = len(nums) // 2
+    left = merge_sort(nums[:mid])    # sort left half
+    right = merge_sort(nums[mid:])   # sort right half
+    return merge(left, right)        # merge them back
+
+nums = [38, 27, 43, 3, 9, 82, 10]
+print(merge_sort(nums))   # [3, 9, 10, 27, 38, 43, 82]
+
+[38, 27, 43, 3, 9, 82, 10]
+        ↓ split
+[38, 27, 43]     [3, 9, 82, 10]
+    ↓ split           ↓ split.    spit then merge function 
+[38] [27, 43]   [3, 9] [82, 10]
+      ↓ merge     ↓ merge  ↓ merge
+    [27, 38, 43] [3, 9] [10, 82]
+              ↓ merge
+        [3, 9, 10, 27, 38, 43, 82]
