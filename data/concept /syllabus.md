@@ -260,7 +260,30 @@ Why JSON?
 - JSON is used here as simple file storage.
 - In real projects, this is usually stored in a database.
 """
+
+a hash function — a math formula that converts the key into a number, and that number points to an exact location in memory. Python jumps directly there.
+Think of it like this:
+List — finding something is like searching a book page by page. More pages = more time. O(n).
+Dict — finding something is like using the book's index. No matter how big the book, the index tells you exactly which page to go to. Instant. O(1).
+
 # two pointer 
+Where You'll Use This in Real Code
+
+-Finding pairs in sorted data
+-Checking if a string is a palindrome
+-Removing duplicates from a sorted list
+-Comparing two strings character by character
+-Merging two sorted lists
+
+palindrome
+    # use two pointers
+    # compare characters from both ends
+    # if any pair doesn't match → return False
+    # if pointers cross → return True
+
+
+# sliding window - same idea different shape
+
 
 Before we build the Log File Analyzer, you need to feel the sliding window pattern. It's the other half of this week.
 Here's the problem in plain English:
@@ -330,3 +353,129 @@ One — What's the difference between two pointers and sliding window?
 Two — Why does two pointers only work on a sorted list for the two sum problem?
 Three — In your sliding window solution, what does nums[i - k] represent?
 Answer all three and we move straight into building the Log File Analyzer project — where you use sliding window on real data.in two pointers we need to know length of list and also need sorted list. two pointers on not sorted list makes it remove not smallest one from the k and finally num[i-k] is the position of the first number in the window
+
+# recursion and trees
+
+A folder can contain files or other folders. Those folders can contain more files or folders, and so on forever. How would you write code to count every single file no matter how deep they're nested?
+
+Try to think it through. Your folder structure looks like this:
+Documents/
+    Work/
+        Projects/
+            2024/
+                report.pdf
+            notes.txt
+        budget.xlsx
+    Personal/
+        photos/
+            holiday.jpg
+
+How deep does it go? You don't know.
+"To count all files in a folder — count the files directly inside it, then do the same thing for each subfolder inside it."
+
+count_files(Documents)
+    → count files in Documents directly
+    → count_files(Work)          ← same function, smaller problem
+        → count_files(Projects)  ← smaller again
+            → count_files(2024)  ← smallest — just files, no folders
+        → count files in Work
+    → count_files(Personal)
+        → count_files(photos)
+
+Recursion works when a problem has this shape:
+"This big problem is just a small version of itself, repeated."
+
+The function stops calling itself when it reaches a folder that has no subfolders inside it — only files. There's nothing left to go deeper into. That's the stopping condition.
+In recursion this is called the base case. Every recursive function has two parts:
+Base case — the condition where the function stops calling itself. The simplest version of the problem that needs no further breaking down.
+Recursive case — where the function calls itself on a smaller version of the problem.
+
+The Folder Counter — In Plain English
+def count_files(folder):
+
+    BASE CASE:
+    if folder has no subfolders:
+        return number of files directly in it
+
+    RECURSIVE CASE:
+    total = files directly in this folder
+    for each subfolder:
+        total += count_files(subfolder)  ← calls itself
+    return total
+
+Your Exercise
+Before we write real file system code, let's practice recursion on something simpler — a nested dictionary that represents a folder structure:
+pythonfolder = {
+    "files": ["notes.txt", "photo.jpg"],
+    "subfolders": [
+        {
+            "files": ["report.pdf"],
+            "subfolders": []
+        },
+        {
+            "files": ["music.mp3", "video.mp4"],
+            "subfolders": [
+                {
+                    "files": ["data.csv"],
+                    "subfolders": []
+                }
+            ]
+        }
+    ]
+}
+Write a recursive function count_files(folder) that counts every file at every level.
+The answer should be 7 — notes.txt, photo.jpg, report.pdf, music.mp3, video.mp4, data.csv = 6... count them yourself first to verify.
+Two hints:
+Hint 1 — base case is when subfolders is empty — just return len(folder["files"])
+Hint 2 — recursive case adds len(folder["files"]) plus calls itself on each subfolder
+Write it and paste back. This is the concept that unlocks trees, graphs, and everything in Week 
+
+if not folder["subfolders"]:
+    return len(folder["files"])      # ✅ base case — no subfolders, count files
+
+total_files = len(folder["files"])   # ✅ count files at current level
+for subfolder in folder["subfolders"]:
+    total_files += count_files(subfolder)  # ✅ recursive case — trust the function
+return total_files                   # ✅ return total
+```
+
+And the answer is 6 — notes.txt, photo.jpg, report.pdf, music.mp3, video.mp4, data.csv.
+
+---
+
+## What Just Happened in Your Code
+
+When you called `count_files(folder)` Python built this call stack:
+```
+count_files(Documents)        → 2 files
+  count_files(Work)           → 1 file
+  count_files(Personal)       → 2 files
+    count_files(nested)       → 1 file
+                              = 6 total
+```
+
+Each call solved a smaller version of the same problem. Each one trusted the function below it to handle the rest. That's recursion working exactly as designed.
+
+---
+
+## The Two Rules of Recursion — Memorise These
+
+**Rule 1 — Always have a base case.** The condition that stops the function calling itself. Without it you get infinite recursion and Python crashes.
+
+**Rule 2 — Every recursive call must move toward the base case.** Each call works on something smaller than the previous one. Subfolders are always smaller than the parent folder.
+
+---
+
+## Now The Real Challenge — Fibonacci
+
+This is the classic recursion problem every programmer learns. It also teaches you why recursion can be slow — and how to fix it.
+
+The Fibonacci sequence: `1, 1, 2, 3, 5, 8, 13, 21...`
+
+Each number is the sum of the two before it.
+```
+fib(1) = 1
+fib(2) = 1
+fib(3) = fib(2) + fib(1) = 2
+fib(4) = fib(3) + fib(2) = 3
+fib(5) = fib(4) + fib(3) = 5

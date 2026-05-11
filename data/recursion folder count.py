@@ -24,7 +24,7 @@ folder = {
 
 def count_files(folder):
     # Base case: if there are no subfolders, return the number of files in the current folder
-    if not folder["subfolders"]:
+    if not folder["subfolders"]: # if there are no subfolders, return the count of files in the current folder
         return len(folder["files"])
     
     # Recursive case: count files in the current folder and add the counts from subfolders
