@@ -865,4 +865,8 @@ print(dfs(graph, "Alice", "Diana"))
 print(dfs(graph, "Alice", "Alice"))
 
 # Dynamic programming 
+The Two Approaches
+Top-down — memoization. Start with the big problem, recurse down, cache results. You already know this.
+Bottom-up — tabulation. Start with the smallest subproblems, fill a table upward until you reach the answer. No recursion at all.
+
 
