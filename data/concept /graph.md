@@ -261,21 +261,42 @@ def dfs(graph, start, target):
 ---
 
 *Extracted from Python DSA Mastery Notes — personal learning journal*
-To understand Dijkstra's Algorithm, think of it as an upgraded version of BFS.Standard BFS assumes every connection (edge) takes exactly 1 step or 1 minute. But in the real world, roads have speed limits and traffic. Some roads take longer to travel than others.Dijkstra’s Algorithm adds a weight (cost, time, or distance) to each arrow to find the absolute fastest path, even if it means taking more steps.Step 1: The Problem with Standard BFSImagine you want to travel from Alice to Diana in this new network with road travel times (weights):text       [5 mins]
+To understand Dijkstra's Algorithm, think of it as an upgraded version of BFS. Standard BFS assumes every connection (edge) takes exactly 1 step or 1 minute. But in the real world, roads have speed limits and traffic. Some roads take longer to travel than others. Dijkstra’s Algorithm adds a weight (cost, time, or distance) to each arrow to find the absolute fastest path, even if it means taking more steps.
+
+### Step 1: The Problem with Standard BFS
+Imagine you want to travel from Alice to Diana in this new network with road travel times (weights):
+
+```text
+       [5 mins]
  Alice ────────> Bob
    │               │
    │ [1 min]       │ [10 mins]
    ▼               ▼
 Charlie ───────> Diana
         [2 mins]
-Use code with caution.If you use BFS: It counts steps. It sees Alice -> Bob -> Diana is only 2 steps. It takes that path. Total time = \(5 + 10 = \mathbf{15\text{ minutes}}\).If you use Dijkstra: It counts actual time. It sees Alice -> Charlie -> Diana is 3 steps, but total time = \(1 + 2 = \mathbf{3\text{ minutes}}\). Dijkstra chooses this path because 3 < 15.Step 2: How Dijkstra's Code is Represented in PythonTo make this work, our dictionary changes slightly. Instead of just a list of names, our array holds pairs of (neighbor, weight).python# Graph dictionary with weights (travel times)
+```
+
+- **If you use BFS:** It counts steps. It sees Alice -> Bob -> Diana is only 2 steps. It takes that path. Total time = \(5 + 10 = \mathbf{15\text{ minutes}}\).
+- **If you use Dijkstra:** It counts actual time. It sees Alice -> Charlie -> Diana is 3 steps, but total time = \(1 + 2 = \mathbf{3\text{ minutes}}\). Dijkstra chooses this path because 3 < 15.
+
+### Step 2: How Dijkstra's Code is Represented in Python
+To make this work, our dictionary changes slightly. Instead of just a list of names, our array holds pairs of `(neighbor, weight)`.
+
+```python
+# Graph dictionary with weights (travel times)
 weighted_graph = {
     "Alice": [("Bob", 5), ("Charlie", 1)],
     "Bob": [("Diana", 10)],
     "Charlie": [("Diana", 2)],
     "Diana": []
 }
-Use code with caution.Step 3: The Python Code ImplementationInstead of a standard queue (popleft()), Dijkstra uses a Priority Queue (via Python's heapq module). This special queue automatically sorts itself so that the node with the lowest total time is always processed first.pythonimport heapq
+```
+
+### Step 3: The Python Code Implementation
+Instead of a standard queue (`popleft()`), Dijkstra uses a Priority Queue (via Python's `heapq` module). This special queue automatically sorts itself so that the node with the lowest total time is always processed first.
+
+```python
+import heapq
 
 def dijkstra(graph, start, target):
     # Priority Queue stores pairs of: (total_time_so_far, current_node)
@@ -308,4 +329,10 @@ def dijkstra(graph, start, target):
 fastest_time = dijkstra(weighted_graph, "Alice", "Diana")
 print(f"The fastest travel time from Alice to Diana is: {fastest_time} minutes")
 # Output: The fastest travel time from Alice to Diana is: 3 minutes
-Use code with caution.Summary of the Graph EvolutionYou have now moved through the three major stages of graph structures in programming:Adjacency List: Connecting keys to plain lists ("Alice": ["Bob"]).BFS/DFS: Using queues or stacks to step through those lists to count steps or explore paths.Dijkstra: Adding weights to the lists ("Alice": [("Bob", 5)]) and using a sorted priority queue to find the absolute most efficient path.
+```
+
+### Summary of the Graph Evolution
+You have now moved through the three major stages of graph structures in programming:
+- **Adjacency List:** Connecting keys to plain lists (`"Alice": ["Bob"]`).
+- **BFS/DFS:** Using queues or stacks to step through those lists to count steps or explore paths.
+- **Dijkstra:** Adding weights to the lists (`"Alice": [("Bob", 5)]`) and using a sorted priority queue to find the absolute most efficient path.
